@@ -1,0 +1,2 @@
+# CutMate
+Clipboard history application

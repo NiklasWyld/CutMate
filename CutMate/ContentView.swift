@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HotKey
 
 struct Copy: Identifiable, Equatable {
     let content: String
@@ -31,6 +32,15 @@ func formatString(_ input: String) -> String {
 
 struct CopyPanel: View {
     @ObservedObject var copies = Copies()
+    var mode: String
+    
+    init() {
+        if let i = UserDefaults.standard.string(forKey: "mode") {
+            self.mode = i
+        } else {
+            self.mode = ""
+        }
+    }
     
     var body: some View {
         ScrollViewReader { proxy in
@@ -42,6 +52,9 @@ struct CopyPanel: View {
                                 let pasteboard = NSPasteboard.general
                                 pasteboard.clearContents()
                                 pasteboard.setString(copy.content, forType: .string)
+                                if (mode == "paste") {
+                                    pasteObject()
+                                }
                             }) {
                                 HStack {
                                     Text(formatString(copy.content))
@@ -87,18 +100,59 @@ struct CopyPanel: View {
                         }
                     }
                 }
-                Button("Clear history") {
-                    copies.clipboard.removeAll()
+                .frame(width: 400)
+                HStack {
+                    SettingsLink {
+                        Text("Settings")
+                    }
+                    Button("Clear history") {
+                        copies.clipboard.removeAll()
+                    }
+                    Button("Quit") {
+                        NSApplication.shared.terminate(self)
+                    }
                 }
+                Spacer(minLength: 10)
             }
         }
     }
 }
 
 struct ControlPanel: View {
+    @Environment(\.dismiss) var dismiss
+    @State public var mode = "Paste on click"
+    let modes = ["Paste on click", "Copy on click"]
+    @State public var menuIcon = true
+    
     var body: some View {
         VStack {
+            Picker("Mode: ", selection: $mode) {
+                ForEach(modes, id: \.self) {
+                    Text($0)
+                }
+            }
+            .pickerStyle(.menu)
+            .frame(width: 250)
+            .onChange(of: mode) {
+                if (mode == modes[0]) {
+                    UserDefaults.standard.set("paste", forKey: "mode")
+                } else {
+                    UserDefaults.standard.set("copy", forKey: "mode")
+                }
+            }
+            .onAppear() {
+                if let i = UserDefaults.standard.string(forKey: "mode") {
+                    if (i == "paste") {
+                        self.mode = modes[0]
+                    } else if (i == "copy") {
+                        self.mode = modes[1]
+                    }
+                }
+            }
             
+            Button("Save & Exit") {
+                dismiss()
+            }
         }
     }
 }

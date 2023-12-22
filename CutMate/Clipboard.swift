@@ -36,8 +36,6 @@ class Clipboard {
                 self.copies.clipboard.insert(copy, at: 0)
             }
         }
-        
-        print(copies.clipboard)
     }
     
     func checkClipboardChange() {

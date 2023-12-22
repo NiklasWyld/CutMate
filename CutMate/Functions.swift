@@ -7,6 +7,49 @@
 
 import Foundation
 import AppKit
+import HotKey
+
+let alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
+private func getHotKeyModifier(_ modifierString: String) -> NSEvent.ModifierFlags {
+    switch modifierString.lowercased() {
+    case "control":
+        return .control
+    case "command":
+        return .command
+    case "option":
+        return .option
+    default:
+        return .control
+    }
+}
+
+private func getHotKeyModifierString(_ modifierString: String) -> String {
+    switch modifierString.lowercased() {
+    case "control":
+        return "⌃"
+    case "command":
+        return "⌘"
+    case "option":
+        return "⌥"
+    default:
+        return "⌃"
+    }
+}
+
+func getHotKey() -> (NSEvent.ModifierFlags, Key) {
+    let hotkey_first = getHotKeyModifier(UserDefaults.standard.string(forKey: "hotkey_first") ?? "control")
+    let hotkey_second = Key(string: UserDefaults.standard.string(forKey: "hotkey_second") ?? "V") ?? .v
+    
+    return (hotkey_first, hotkey_second)
+}
+
+func getHotKeyStrings() -> (String, String) {
+    let hotkey_first = getHotKeyModifierString(UserDefaults.standard.string(forKey: "hotkey_first") ?? "control")
+    let hotkey_second = UserDefaults.standard.string(forKey: "hotkey_second") ?? "V"
+    
+    return (hotkey_first, hotkey_second)
+}
 
 func showNotification(message: String, informativeText: String? = nil) {
     let alert = NSAlert()

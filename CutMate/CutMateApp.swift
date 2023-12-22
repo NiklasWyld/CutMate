@@ -21,7 +21,9 @@ struct CutMateApp: App {
         let clipboard = Clipboard(copies:copypanel.copies)
         clipboard.startThread()
         
-        hotkey = HotKey(key: .c, modifiers: [.control], keyDownHandler: {
+        var (hotkey_first, hotkey_second) = getHotKey()
+        
+        hotkey = HotKey(key: hotkey_second, modifiers: [hotkey_first], keyDownHandler: {
             togglePanelVisibility()
         })
         

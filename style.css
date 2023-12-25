@@ -34,3 +34,166 @@ body {
 .nav-items a:hover {
     text-shadow: 0px 0px 20px #202020;
 }
+
+.intro-section {
+    padding: 150px;
+    height: 400px;
+    background-color: rgb(42, 42, 44);
+}
+
+.heading-header-left {
+    color: white;
+    float: left;
+    width: 50%;
+}
+
+.download-button {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 600;
+    text-decoration-line: none;
+    color: rgb(255, 255, 255);
+    padding: 15px;
+    border-radius: 5px;
+    background-image: linear-gradient(rgb(0, 110, 254) 74.93%, rgb(23, 93, 204) 100%);
+    box-shadow: rgba(0, 0, 0, 0.03) 0px 10px 10px;
+    background-size: 100% auto;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.download-button:hover {
+    background-image: linear-gradient(rgb(0, 97, 224) 74.93%, rgb(17, 62, 135) 100%);
+    opacity: 0.5;
+    transition-duration: 0.45s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    transition-property: opacity;
+}
+
+.logo-header-right {
+    width: 50%;
+    float: right;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-header-right img {
+    rotate: -25deg; 
+}
+
+.function-section {
+    padding: 150px;
+    height: 400px;
+}
+
+.img-container-left {
+    float: left;   
+}
+
+.function-description-left {
+    float: left;
+    color: rgb(42, 42, 42);
+}
+
+.function-heading {
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.img.container-right {
+    float: right;   
+}
+
+.function-description-right {
+    float: right;
+    color: rgb(42, 42, 42);
+}
+
+.function-text {
+    color: rgb(42, 42, 42);
+}
+
+.todo-section {
+    padding: 150px;
+    height: 400px;
+    background-color: rgb(42, 42, 44);
+}
+
+.todo-got-an-idea {
+    color: white;
+    float: left;
+    width: 50%;
+}
+
+.img-1 {
+    width: 400px;
+}
+
+.contact-button {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 600;
+    text-decoration-line: none;
+    color: rgb(255, 255, 255);
+    padding: 15px;
+    border-radius: 5px;
+    background-image: linear-gradient(rgb(0, 110, 254) 74.93%, rgb(23, 93, 204) 100%);
+    box-shadow: rgba(0, 0, 0, 0.03) 0px 10px 10px;
+    background-size: 100% auto;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.contact-button:hover {
+    background-image: linear-gradient(rgb(0, 97, 224) 74.93%, rgb(17, 62, 135) 100%);
+    opacity: 0.5;
+    transition-duration: 0.45s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    transition-property: opacity;
+}
+
+.todo-list {
+    float: right;
+    width: 50%;
+}
+
+.todo-container {
+    border: 1px solid white;
+    background-color: rgba(255, 255, 255, 0.239);
+    border-radius: 9px;
+    margin: 20px;
+    margin-left: 45px;
+    padding: 15px;
+    height: 350px;
+}
+
+.todo-small-heading {
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.todo-element {
+    color: white;
+    margin-bottom: 5px;
+    margin-left: 15px;
+}
+
+footer {
+    margin: 20px;
+    text-align: center;
+    color: rgb(48, 48, 48);
+}
+
+footer a {
+    color: rgb(48, 48, 48);
+}

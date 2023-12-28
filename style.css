@@ -109,8 +109,8 @@ body {
     font-weight: 700;
 }
 
-.img.container-right {
-    float: right;   
+.img-container-right {
+    float: right;
 }
 
 .function-description-right {
@@ -254,7 +254,7 @@ footer a {
 
 
 /* Smartphone */
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 899px) {
     .desktop-view {
         display: none;
     }
@@ -320,6 +320,21 @@ footer a {
 }
 
 /* Tablet */
-@media screen and (max-width: 900px) {
-    
+@media screen and (max-width: 1600px) {
+    .function-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .function-section h1 {
+        font-size: 40px;
+    }
+
+    .function-section p {
+        font-size: 20px;
+    }
+
+    .function-description-right {
+        width: 50%;
+    }
 }

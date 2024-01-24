@@ -15,7 +15,10 @@ class FloatingPanel: NSPanel {
         self.titlebarAppearsTransparent = true
 
         self.isMovableByWindowBackground = true
-
+        
+        self.isOpaque = false
+        self.backgroundColor = NSColor(getBackground().0.opacity(getBackground().1))
+        
         self.isReleasedWhenClosed = false
 
         self.standardWindowButton(.closeButton)?.isHidden = true

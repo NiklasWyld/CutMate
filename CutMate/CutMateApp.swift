@@ -44,7 +44,7 @@ struct CutMateApp: App {
         Settings {
             if (settings) {
                 controlpanel
-                    .frame(width: 300, height: 300)
+                    .frame(width: 300, height: 500)
             } else {
                 EmptyView()
             }

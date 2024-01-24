@@ -46,6 +46,7 @@ func formatStringSmall(_ input: String) -> String {
 struct CopyPanel: View {
     @ObservedObject var copies = Copies()
     var mode: String
+    var button_color: Color
     
     init() {
         if let i = UserDefaults.standard.string(forKey: "mode") {
@@ -53,6 +54,8 @@ struct CopyPanel: View {
         } else {
             self.mode = ""
         }
+        
+        button_color = getButtonColor()
     }
     
     var body: some View {
@@ -99,7 +102,7 @@ struct CopyPanel: View {
                                 .frame(maxWidth: .infinity)
                                 .background(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .fill(Color.blue)
+                                        .fill(button_color)
                                 )
                             }
                             .buttonStyle(PlainButtonStyle())
@@ -170,8 +173,231 @@ struct ControlPanel: View {
     let hotkeys = ["control", "option", "command"]
     @State public var hotkey_second = "V"
     
+    // Design
+    
+    let colors_ = ["red", "orange", "yellow", "blue", "green", "purple", "grey", "black"]
+    @State public var backgroundcolor = "grey"
+    @State public var buttoncolor = "blue"
+    
+    @State public var background_opacity = 10.0
+    
     var body: some View {
         VStack {
+            
+            HStack {
+                HStack {
+                    Spacer()
+                        .frame(width: 10)
+                    
+                    Image(systemName: "keyboard")
+
+                    Text("HotKey")
+                        .font(.system(size: 13, weight: .bold))
+                    
+                    Spacer()
+                }
+            }
+            HStack {
+                Picker("", selection: $hotkey_first) {
+                    ForEach(hotkeys, id: \.self) { hotkey in
+                        Text(hotkey)
+                    }
+                }
+                .frame(width: 150)
+                .onChange(of: mode) {
+                    if (mode == modes[0]) {
+                        UserDefaults.standard.set("paste", forKey: "mode")
+                    } else {
+                        UserDefaults.standard.set("copy", forKey: "mode")
+                    }
+                }
+                .onAppear() {
+                    if let i = UserDefaults.standard.string(forKey: "hotkey_first") {
+                        self.hotkey_first = i
+                    }
+                }
+                .onChange(of: hotkey_first) {
+                    UserDefaults.standard.set(hotkey_first, forKey: "hotkey_first")
+                }
+                
+                Picker("+ ", selection: $hotkey_second) {
+                    ForEach(alphabet, id: \.self) { letter in
+                        Text(String(letter))
+                    }
+                }
+                .frame(width: 100)
+                .onAppear() {
+                    if let p = UserDefaults.standard.string(forKey: "hotkey_second") {
+                        self.hotkey_second = p
+                    }
+                }
+                .onChange(of: hotkey_second) {
+                    UserDefaults.standard.set(hotkey_second, forKey: "hotkey_second")
+                }
+            }
+            .padding(15)
+            .background(
+                Color(red: 33/255, green: 33/255, blue: 33/255)
+            )
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.black, lineWidth: 0.5)
+            )
+            
+            Spacer()
+                .frame(height: 15)
+            
+            HStack {
+                HStack {
+                    Spacer()
+                        .frame(width: 10)
+                    
+                    Image(systemName: "doc.on.clipboard")
+
+                    Text("Paste Mode")
+                        .font(.system(size: 13, weight: .bold))
+                    
+                    Spacer()
+                }
+            }
+            
+            HStack {
+                Picker("", selection: $mode) {
+                    ForEach(modes, id: \.self) {
+                        Text($0)
+                    }
+                }
+                .pickerStyle(.menu)
+                .frame(width: 250)
+                .onChange(of: mode) {
+                    if (mode == modes[0]) {
+                        UserDefaults.standard.set("paste", forKey: "mode")
+                    } else {
+                        UserDefaults.standard.set("copy", forKey: "mode")
+                    }
+                }
+                .onAppear() {
+                    if let i = UserDefaults.standard.string(forKey: "mode") {
+                        if (i == "paste") {
+                            self.mode = modes[0]
+                        } else if (i == "copy") {
+                            self.mode = modes[1]
+                        }
+                    }
+                }
+            }
+            .padding(15)
+            .background(
+                Color(red: 33/255, green: 33/255, blue: 33/255)
+            )
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.black, lineWidth: 0.5)
+            )
+            
+            Spacer()
+                .frame(height: 20)
+            
+            HStack {
+                HStack {
+                    Spacer()
+                        .frame(width: 10)
+                    
+                    Image(systemName: "paintbrush")
+
+                    Text("Design")
+                        .font(.system(size: 13, weight: .bold))
+                    
+                    Spacer()
+                }
+            }
+            
+            HStack {
+                VStack {
+                    Picker("Background Color: ", selection: $backgroundcolor) {
+                        ForEach(colors_, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .frame(width: 250)
+                    .onChange(of: backgroundcolor) {
+                        UserDefaults.standard.set(backgroundcolor, forKey: "backgroundcolor")
+                    }
+                    .onAppear() {
+                        if let i = UserDefaults.standard.string(forKey: "backgroundcolor") {
+                            self.backgroundcolor = i
+                        }
+                    }
+                    
+                    HStack {
+                        Text("Background Opacity: ")
+                        Slider(
+                            value: $background_opacity,
+                            in: 0...10,
+                            onEditingChanged: { editing in
+                                UserDefaults.standard.set(background_opacity, forKey: "background_opacity")
+                            }
+                        )
+                        .onAppear() {
+                            self.background_opacity = UserDefaults.standard.double(forKey: "background_opacity")
+                        }
+                    }
+                    
+                    Picker("Button Color: ", selection: $buttoncolor) {
+                        ForEach(colors_, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    .frame(width: 250)
+                    .onChange(of: buttoncolor) {
+                        UserDefaults.standard.set(buttoncolor, forKey: "buttoncolor")
+                    }
+                    .onAppear() {
+                        if let i = UserDefaults.standard.string(forKey: "buttoncolor") {
+                            self.buttoncolor = i
+                        }
+                    }
+                }
+            }
+            .padding(15)
+            .background(
+                Color(red: 33/255, green: 33/255, blue: 33/255)
+            )
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.black, lineWidth: 0.5)
+            )
+            
+            Spacer()
+                .frame(height: 20)
+            
+            HStack {
+                Button("Exit without saving") {
+                    dismiss()
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(8)
+                .background(Color.blue)
+                .cornerRadius(8)
+
+                Button("Save & Exit") {
+                    showNotification(message: "Restart the application for the settings to take effect!")
+                    NSApplication.shared.terminate(self)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .padding(8)
+                .background(Color.blue)
+                .cornerRadius(8)
+            }
+            .frame(maxWidth: .infinity)
+        }
+        
+        /*VStack {
             HStack {
                 Picker("HotKey: ", selection: $hotkey_first) {
                     ForEach(hotkeys, id: \.self) { hotkey in
@@ -247,6 +473,6 @@ struct ControlPanel: View {
                     NSApplication.shared.terminate(self)
                 }
             }
-        }
+        }*/
     }
 }

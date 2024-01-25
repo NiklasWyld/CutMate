@@ -52,6 +52,11 @@ body {
     width: 50%;
 }
 
+.function {
+    display: block;
+    position: relative;
+}
+
 .download-button {
     position: relative;
     display: inline-block;
@@ -136,6 +141,41 @@ body {
 
 .img-1 {
     width: 400px;
+}
+
+.img-2 {
+    width: 400px;
+}
+
+#image-slider {
+    position: relative;
+}
+
+#image-slider img {
+    display: none;
+}
+
+#image-slider img:first-child {
+    display: block;
+}
+
+#slider-dots {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.slider-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #888;
+    border-radius: 50%;
+    margin: 0 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.slider-dot.active {
+    background-color: #333;
 }
 
 .contact-button {
@@ -335,6 +375,10 @@ footer a {
     }
 
     .function-description-right {
+        width: 50%;
+    }
+
+    .function-description-left {
         width: 50%;
     }
 }

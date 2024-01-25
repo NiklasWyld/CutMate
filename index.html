@@ -6,6 +6,56 @@
     <title>CutMate - Startseite</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script>
+        window.onload = function() {
+            let currentImageIndex = 0;
+            var images = document.querySelectorAll('.desktop-view #image-slider img');
+            var dotsContainer = document.querySelector('.desktop-view #slider-dots');
+
+            if (window.innerWidth <= 899) {
+                images = document.querySelectorAll('.mobile-view #image-slider img');
+                dotsContainer = document.querySelector('.mobile-view #slider-dots');
+            }
+
+            for (let i = 0; i < images.length; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('slider-dot');
+                dot.addEventListener('click', () => changeImage(i));
+                dotsContainer.appendChild(dot);
+            }
+
+            function changeImage(index) {
+                currentImageIndex = index;
+                updateSlider();
+            }
+
+            function updateSlider() {
+                images.forEach((image, index) => {
+                    if (index === currentImageIndex) {
+                        image.style.display = 'block';
+                    } else {
+                        image.style.display = 'none';
+                    }
+                });
+
+                const dots = document.querySelectorAll('.slider-dot');
+                dots.forEach((dot, index) => {
+                    if (index === currentImageIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+
+            setInterval(() => {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                updateSlider();
+            }, 5000);
+
+            updateSlider();
+        }
+    </script>
     <link rel="shortcut icon" href="Icon.png" type="image/x-icon">
 </head>
 <body>
@@ -52,7 +102,7 @@
                 <img src="Icon.png" alt="CutMate" width="400" height="400" class="logo-header-img">
             </div>
         </section>
-        <section class="function-section" id="functions">
+        <section class="function-section" id="functions" style="padding-bottom: 20px !important;">
             <div class="function">
                 <div class="img-container-left">
                     <img src="screenshots/app_standart.png" alt="CutMate App Screenshot" class="img-1">
@@ -64,6 +114,26 @@
                     <p class="function-text">
                         With CutMate, you don't just have one object on the clipboard, but several, this makes your workflow much easier and faster.
                     </p>
+                </div>
+            </div>
+        </section>
+        <section class="function-section" style="padding-bottom: 250px;">
+            <div class="function">
+                <div class="function-description-left">
+                    <h1 class="function-heading">
+                        Do it the way you want it
+                    </h1>
+                    <p class="function-text">
+                        You can customize the entire look of CutMate to suit you perfectly.
+                    </p>
+                </div>
+                <div class="img-container-right">
+                    <div id="image-slider">
+                        <img src="screenshots/CustomizeCutmate1.png" alt="CutMate App Customize" class="img-2" id="customize-image">
+                        <img src="screenshots/CustomizeCutmate2.png" alt="CutMate App Customize" class="img-2" id="customize-image">
+                        <img src="screenshots/CustomizeCutmate3.png" alt="CutMate App Customize" class="img-2" id="customize-image">
+                    </div>
+                    <div id="slider-dots"></div>
                 </div>
             </div>
         </section>
@@ -118,6 +188,22 @@
                         With CutMate, you don't just have one object on the clipboard, but several, this makes your workflow much easier and faster.
                     </p>
                     <img src="screenshots/app_standart.png" alt="CutMate App Screenshot" class="img-1">
+            </div>
+        </section>
+        <section class="function-section" style="padding-bottom: 250px;">
+            <div class="function">
+                <h1 class="function-heading">
+                    Do it the way you want it
+                </h1>
+                <p class="function-text">
+                    You can customize the entire look of CutMate to suit you perfectly.
+                </p>
+                <div id="image-slider">
+                    <img src="screenshots/CustomizeCutmate1.png" alt="CutMate App Customize" class="img-2" id="customize-image">
+                    <img src="screenshots/CustomizeCutmate2.png" alt="CutMate App Customize" class="img-2" id="customize-image">
+                    <img src="screenshots/CustomizeCutmate3.png" alt="CutMate App Customize" class="img-2" id="customize-image">
+                </div>
+                <div id="slider-dots"></div>
             </div>
         </section>
         <section class="todo-section" id="todo">

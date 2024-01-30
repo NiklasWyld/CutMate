@@ -43,6 +43,8 @@ private func getColorFromName(color: String) -> Color {
         return Color(red: 41/255, green: 42/255, blue: 41/255)
     case "black":
         return .black
+    case "white":
+        return .white
     default:
         return .gray
     }
@@ -116,4 +118,29 @@ func pasteObject() {
        let event2 = CGEvent(keyboardEventSource: nil, virtualKey: 0x09, keyDown: false)
        event2?.post(tap: CGEventTapLocation.cghidEventTap)
    }
+}
+
+func keyCodeToNumber(_ keyCode: CGKeyCode) -> Int? {
+    switch keyCode {
+    case 18:
+        return 1
+    case 19:
+        return 2
+    case 20:
+        return 3
+    case 21:
+        return 4
+    case 23:
+        return 5
+    case 22:
+        return 6
+    case 26:
+        return 7
+    case 28:
+        return 8
+    case 25:
+        return 9
+    default:
+        return nil
+    }
 }

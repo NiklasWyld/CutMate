@@ -92,11 +92,29 @@ struct CopyPanel: View {
                                     pasteObject()
                                 }
                             }) {
-                                HStack {
-                                    Text(formatString(copy.content))
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.leading)
-                                    Spacer()
+                                VStack {
+                                    HStack {
+                                        Text(formatString(copy.content))
+                                            .foregroundColor(.white)
+                                            .multilineTextAlignment(.leading)
+                                        Spacer()
+                                    }
+                                    
+                                    if copies.clipboard.firstIndex(where: { $0.id == copy.id })!+1 <= 9 {
+                                        Spacer()
+                                        
+                                        HStack {
+                                            Text("⌃")
+                                                .font(Font.system(size: 10, weight: .bold))
+                                                .padding(1)
+                                                .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.primary, lineWidth: 1))
+                                            Text("\(copies.clipboard.firstIndex(where: { $0.id == copy.id })!+1)")
+                                                .font(Font.system(size: 10, weight: .bold))
+                                                .padding(1)
+                                                .overlay(RoundedRectangle(cornerRadius: 4).stroke(Color.primary, lineWidth: 1))
+                                            Spacer()
+                                        }
+                                    }
                                 }
                                 .padding(10)
                                 .frame(maxWidth: .infinity)
@@ -111,6 +129,7 @@ struct CopyPanel: View {
                                 Button(action: {
                                     if let index = self.copies.clipboard.firstIndex(where: { $0.id == copy.id }) {
                                         self.copies.clipboard.remove(at: index)
+                                        ext_clipboard = copies.clipboard
                                     }
                                 }) {
                                     Text("Entfernen")
@@ -154,6 +173,7 @@ struct CopyPanel: View {
                     }
                     Button("Clear history") {
                         copies.clipboard.removeAll()
+                        ext_clipboard = copies.clipboard
                     }
                     Button("Quit") {
                         NSApplication.shared.terminate(self)
@@ -175,7 +195,7 @@ struct ControlPanel: View {
     
     // Design
     
-    let colors_ = ["red", "orange", "yellow", "blue", "green", "purple", "grey", "black"]
+    let colors_ = ["red", "orange", "yellow", "blue", "green", "purple", "grey", "black", "white"]
     @State public var backgroundcolor = "grey"
     @State public var buttoncolor = "blue"
     

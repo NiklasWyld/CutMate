@@ -8,6 +8,7 @@
 import SwiftUI
 import Cocoa
 import HotKey
+import Sparkle
 
 @main
 struct CutMateApp: App {
@@ -17,18 +18,22 @@ struct CutMateApp: App {
     var floating_copy_panel: FloatingPanel!
     public var settings = true
     
+    private let updaterController: SPUStandardUpdaterController
+
     init() {
+        updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+        
         let clipboard = Clipboard(copies:copypanel.copies)
         clipboard.startThread()
         
         var (hotkey_first, hotkey_second) = getHotKey()
         
-        hotkey = HotKey(key: hotkey_second, modifiers: [hotkey_first], keyDownHandler: {
+        hotkey = HotKey(key: hotkey_second, modifiers: [hotkey_first], keyUpHandler: {
             togglePanelVisibility()
         })
         
         _ = copypanel.ignoresSafeArea(edges: .top)
-
+        
         floating_copy_panel = FloatingPanel(contentRect: NSRect(x: 0, y: 0, width: 400, height: 500), backing: .buffered, defer: false)
 
         floating_copy_panel.title = "CutMate"
@@ -38,6 +43,29 @@ struct CutMateApp: App {
 
         floating_copy_panel.orderFront(nil)
         floating_copy_panel.makeKey()
+        
+        togglePanelVisibility(panel_:floating_copy_panel)
+        
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
+            if event.modifierFlags.contains(NSEvent.ModifierFlags.control) {
+                if keyCodeToNumber(event.keyCode) != nil {
+                    var number = keyCodeToNumber(event.keyCode)!
+                    var copy: Copy? = nil
+                    
+                    if number > 0 && number <= ext_clipboard.count {
+                        copy = ext_clipboard[number-1]
+                    } else {
+                        return event
+                    }
+                
+                    let pasteboard = NSPasteboard.general
+                    pasteboard.clearContents()
+                    pasteboard.setString(copy!.content, forType: .string)
+                    pasteObject()
+                }
+            }
+            return event
+        }
     }
     
     var body: some Scene {
@@ -56,24 +84,40 @@ struct CutMateApp: App {
             }
             Button("Clear history") {
                 copypanel.copies.clipboard.removeAll()
+                ext_clipboard = copypanel.copies.clipboard
             }
             Button("Quit") {
                 NSApplication.shared.terminate(self)
+            }
+        }
+        .commands {
+            CommandGroup(after: .appInfo) {
+                CheckForUpdatesView(updater: updaterController.updater)
             }
         }
     }
 }
 
 var isPanelVisible = true
+var panel: FloatingPanel? = nil
 
-func togglePanelVisibility() {
+func togglePanelVisibility(panel_: FloatingPanel? = nil) {
+    if (panel_ != nil) {
+        panel = panel_
+        return
+    }
+    
     if isPanelVisible {
-        NSApplication.shared.hide(nil)
-        NSApp.setActivationPolicy(.accessory)
+        if (panel!.isVisible == true) {
+            panel?.setIsVisible(false)
+        }
     } else {
-        NSApp.setActivationPolicy(.regular)
-        NSApplication.shared.activate(ignoringOtherApps: true)
+        if (panel!.isVisible == false) {
+            panel?.setIsVisible(true)
+        }
     }
     
     isPanelVisible.toggle()
 }
+
+var ext_clipboard: [Copy] = []

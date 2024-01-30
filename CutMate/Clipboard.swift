@@ -28,12 +28,14 @@ class Clipboard {
         let copy = Copy(content: clipboard_value ?? "")
         
         DispatchQueue.main.async {
-            if let index = self.copies.clipboard.firstIndex(where: { $0.content == clipboard_value }) {
+            if let index = self.copies.clipboard.firstIndex(where: { $0.content == copy.content }) {
                 self.copies.clipboard.remove(at: index)
 
                 self.copies.clipboard.insert(copy, at: 0)
+                ext_clipboard = self.copies.clipboard
             } else {
                 self.copies.clipboard.insert(copy, at: 0)
+                ext_clipboard = self.copies.clipboard
             }
         }
     }
@@ -41,7 +43,7 @@ class Clipboard {
     func checkClipboardChange() {
         if (self.last_clipboard_value != NSPasteboard.general.string(forType: .string)) {
             clipboardChanged()
-            self.last_clipboard_value = NSPasteboard.general.string(forType: .string);
+            self.last_clipboard_value = NSPasteboard.general.string(forType: .string)
         }
     }
     

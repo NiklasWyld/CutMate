@@ -87,6 +87,9 @@ struct CutMateApp: App {
                 copypanel.copies.clipboard.removeAll()
                 ext_clipboard = copypanel.copies.clipboard
             }
+            Divider()
+            CheckForUpdatesView(updater: updaterController.updater)
+            Divider()
             Button("Quit") {
                 NSApplication.shared.terminate(self)
             }

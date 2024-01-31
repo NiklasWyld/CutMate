@@ -52,7 +52,7 @@ struct CopyPanel: View {
         if let i = UserDefaults.standard.string(forKey: "mode") {
             self.mode = i
         } else {
-            self.mode = ""
+            self.mode = "paste"
         }
         
         button_color = getButtonColor()
@@ -189,7 +189,7 @@ struct ControlPanel: View {
     @Environment(\.dismiss) var dismiss
     @State public var mode = "Paste on click"
     let modes = ["Paste on click", "Copy on click"]
-    @State public var hotkey_first = "ctrl"
+    @State public var hotkey_first = "control"
     let hotkeys = ["control", "option", "command"]
     @State public var hotkey_second = "V"
     
@@ -224,13 +224,6 @@ struct ControlPanel: View {
                     }
                 }
                 .frame(width: 150)
-                .onChange(of: mode) {
-                    if (mode == modes[0]) {
-                        UserDefaults.standard.set("paste", forKey: "mode")
-                    } else {
-                        UserDefaults.standard.set("copy", forKey: "mode")
-                    }
-                }
                 .onAppear() {
                     if let i = UserDefaults.standard.string(forKey: "hotkey_first") {
                         self.hotkey_first = i
@@ -416,83 +409,5 @@ struct ControlPanel: View {
             }
             .frame(maxWidth: .infinity)
         }
-        
-        /*VStack {
-            HStack {
-                Picker("HotKey: ", selection: $hotkey_first) {
-                    ForEach(hotkeys, id: \.self) { hotkey in
-                        Text(hotkey)
-                    }
-                }
-                .frame(width: 150)
-                .onChange(of: mode) {
-                    if (mode == modes[0]) {
-                        UserDefaults.standard.set("paste", forKey: "mode")
-                    } else {
-                        UserDefaults.standard.set("copy", forKey: "mode")
-                    }
-                }
-                .onAppear() {
-                    if let i = UserDefaults.standard.string(forKey: "hotkey_first") {
-                        self.hotkey_first = i
-                    }
-                }
-                .onChange(of: hotkey_first) {
-                    UserDefaults.standard.set(hotkey_first, forKey: "hotkey_first")
-                }
-                
-                Picker("+ ", selection: $hotkey_second) {
-                    ForEach(alphabet, id: \.self) { letter in
-                        Text(String(letter))
-                    }
-                }
-                .frame(width: 100)
-                .onAppear() {
-                    if let p = UserDefaults.standard.string(forKey: "hotkey_second") {
-                        self.hotkey_second = p
-                    }
-                }
-                .onChange(of: hotkey_second) {
-                    UserDefaults.standard.set(hotkey_second, forKey: "hotkey_second")
-                }
-            }
-            Picker("Mode: ", selection: $mode) {
-                ForEach(modes, id: \.self) {
-                    Text($0)
-                }
-            }
-            .pickerStyle(.menu)
-            .frame(width: 250)
-            .onChange(of: mode) {
-                if (mode == modes[0]) {
-                    UserDefaults.standard.set("paste", forKey: "mode")
-                } else {
-                    UserDefaults.standard.set("copy", forKey: "mode")
-                }
-            }
-            .onAppear() {
-                if let i = UserDefaults.standard.string(forKey: "mode") {
-                    if (i == "paste") {
-                        self.mode = modes[0]
-                    } else if (i == "copy") {
-                        self.mode = modes[1]
-                    }
-                }
-            }
-            
-            Spacer()
-                .frame(height: 20)
-            
-            HStack {
-                Button("Exit without saving") {
-                    dismiss()
-                }
-                
-                Button("Save & Exit") {
-                    showNotification(message: "Restart the application for the settings to take effect!")
-                    NSApplication.shared.terminate(self)
-                }
-            }
-        }*/
     }
 }

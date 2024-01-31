@@ -9,7 +9,7 @@ Take a look at the website:
 ## Installation guide
 
 ### Download CutMate
-<https://github.com/NiklasWyld/CutMate/releases/tag/cutmate>
+<https://github.com/NiklasWyld/CutMate/releases/latest>
 
 Click on "CutMate.dmg" on the latest release to download it
 
@@ -21,4 +21,10 @@ If it says that the app can't be verified, click "Open Anyway" under Privacy & S
 ![macos-sonoma-system-settings-privacy-security-app-blocked-not-from-identified-developer-open-anyway](https://github.com/NiklasWyld/CutMate/assets/84245129/e668a37e-4674-4e32-830f-29cff46340a9)
 
 ### Customize it
-After you install CutMate, you can customize it in the settings. Set your preferred hotkey and the type of insertion. (Soon you will also be able to change the design)
+After you install CutMate, you can customize it in the settings. Set your preferred hotkey, the type of insertion and design.
+
+### Keep it updated
+
+Make sure you're always up to date by clicking "Check For Updates" in the CutMate menu bar.
+
+![CutMate Update Image](https://github.com/NiklasWyld/CutMate/blob/website/screenshots/CutMateUpdate.png)

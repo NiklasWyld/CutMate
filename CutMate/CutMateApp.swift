@@ -43,6 +43,7 @@ struct CutMateApp: App {
 
         floating_copy_panel.orderFront(nil)
         floating_copy_panel.makeKey()
+        NSApp.setActivationPolicy(.accessory)
         
         togglePanelVisibility(panel_:floating_copy_panel)
         

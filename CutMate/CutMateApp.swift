@@ -80,8 +80,26 @@ struct CutMateApp: App {
         }
         
         MenuBarExtra("CutMate", systemImage: "scissors") {
-            SettingsLink {
-                Text("Settings")
+            Button("Open/Close Panel") {
+                togglePanelVisibility()
+            }
+            Divider()
+            if #available(macOS 14.0, *) {
+                SettingsLink {
+                    Text("Settings")
+                }
+            }
+            else {
+                Button(action: {
+                    if #available(macOS 13.0, *) {
+                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                    }
+                    else {
+                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    }
+                }, label: {
+                    Text("Settings")
+                })
             }
             Button("Clear history") {
                 copypanel.copies.clipboard.removeAll()

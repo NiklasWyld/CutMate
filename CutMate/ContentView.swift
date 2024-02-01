@@ -149,7 +149,7 @@ struct CopyPanel: View {
                         }
                     }
                     .padding()
-                    .onChange(of: copies.clipboard.count) {
+                    .onChange(of: copies.clipboard.count) { e in
                         if(copies.clipboard.count != 0) {
                             proxy.scrollTo(copies.clipboard.first!.id)
                         }
@@ -168,8 +168,22 @@ struct CopyPanel: View {
                     Text(" Hide/open panel")
                 }
                 HStack {
-                    SettingsLink {
-                        Text("Settings")
+                    if #available(macOS 14.0, *) {
+                        SettingsLink {
+                            Text("Settings")
+                        }
+                    }
+                    else {
+                        Button(action: {
+                            if #available(macOS 13.0, *) {
+                                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                            }
+                            else {
+                                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                            }
+                        }, label: {
+                            Text("Settings")
+                        })
                     }
                     Button("Clear history") {
                         copies.clipboard.removeAll()
@@ -229,7 +243,7 @@ struct ControlPanel: View {
                         self.hotkey_first = i
                     }
                 }
-                .onChange(of: hotkey_first) {
+                .onChange(of: hotkey_first) { e in
                     UserDefaults.standard.set(hotkey_first, forKey: "hotkey_first")
                 }
                 
@@ -244,7 +258,7 @@ struct ControlPanel: View {
                         self.hotkey_second = p
                     }
                 }
-                .onChange(of: hotkey_second) {
+                .onChange(of: hotkey_second) { e in
                     UserDefaults.standard.set(hotkey_second, forKey: "hotkey_second")
                 }
             }
@@ -283,7 +297,7 @@ struct ControlPanel: View {
                 }
                 .pickerStyle(.menu)
                 .frame(width: 250)
-                .onChange(of: mode) {
+                .onChange(of: mode) { e in
                     if (mode == modes[0]) {
                         UserDefaults.standard.set("paste", forKey: "mode")
                     } else {
@@ -336,7 +350,7 @@ struct ControlPanel: View {
                     }
                     .pickerStyle(.menu)
                     .frame(width: 250)
-                    .onChange(of: backgroundcolor) {
+                    .onChange(of: backgroundcolor) { e in
                         UserDefaults.standard.set(backgroundcolor, forKey: "backgroundcolor")
                     }
                     .onAppear() {
@@ -366,7 +380,7 @@ struct ControlPanel: View {
                     }
                     .pickerStyle(.menu)
                     .frame(width: 250)
-                    .onChange(of: buttoncolor) {
+                    .onChange(of: buttoncolor) { e in
                         UserDefaults.standard.set(buttoncolor, forKey: "buttoncolor")
                     }
                     .onAppear() {

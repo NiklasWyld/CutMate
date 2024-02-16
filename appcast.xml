@@ -3,12 +3,12 @@
     <channel>
         <title>CutMate</title>
         <item>
-            <title>0.4</title>
-            <pubDate>Fri, 16 Feb 2024 13:44:32 +0100</pubDate>
-            <sparkle:version>0.4</sparkle:version>
-            <sparkle:shortVersionString>0.4</sparkle:shortVersionString>
+            <title>0.4.1</title>
+            <pubDate>Fri, 16 Feb 2024 20:06:01 +0100</pubDate>
+            <sparkle:version>0.4.1</sparkle:version>
+            <sparkle:shortVersionString>0.4.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/NiklasWyld/CutMate/releases/download/cutmate-v0.4/CutMate.dmg" length="3019927" type="application/octet-stream" sparkle:edSignature="2cX3u9tiDdyL3B8oFqmyZdyz12SFJTR41aJHMYDnLbyncCQUcj0wWPa99j1Ghf0Jgq3VIWrmRntycEWttdJEBw=="/>
+            <enclosure url="https://github.com/NiklasWyld/CutMate/releases/download/cutmate-v0.4.1/CutMate.dmg" length="3021782" type="application/octet-stream" sparkle:edSignature="Hmg4qx3SjfatayrH8HjOZPVz+8DKuRHKYIcL9OxraYtRueJyDPEtpiFCOgyudgOdwW3s51dqOJAD3eDWxrCSAw=="/>
         </item>
     </channel>
 </rss>
